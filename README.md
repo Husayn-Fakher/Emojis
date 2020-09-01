@@ -28,7 +28,7 @@ When you start the app are shown a screen with 5 buttons and an EditText.
  
  The second button will display a list of all the Emoticons stored on the device.
  You can delete an emoticon by clicking on its image. You can also move it by long pressing 
- its image.Note that the image will not be deleted form the database. It will be shown
+ its image. Note that the image will not be deleted form the database. It will be shown
  again if you do a pull to refresh.
  
  After that you have an editText where you can input the name of a git user account. You will get 
