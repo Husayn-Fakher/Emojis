@@ -20,9 +20,9 @@ I use the android paging library in order to show large lists.
 
 -----------------------------------------------------------------------------
 
-                                  App Usage
-                                  
- When you start the app are shown a screen with 5 buttons and an EditText.
+                                  App Usage:
+
+When you start the app are shown a screen with 5 buttons and an EditText.
  
  The first button is to diplay a random emoticons in the imageView.
  
