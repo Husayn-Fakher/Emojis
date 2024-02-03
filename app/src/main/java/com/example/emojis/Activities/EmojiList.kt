@@ -11,17 +11,21 @@ import com.example.emojis.*
 import com.example.emojis.Adapeters.DragManageAdapter
 import com.example.emojis.Adapeters.EmojiAdapter
 import com.example.emojis.database.EmojiDatabase
+import com.example.emojis.databinding.ActivityEmojiListBinding
 import com.example.emojis.network.models.Emoji
-import kotlinx.android.synthetic.main.activity_emoji_list.*
 
 class EmojiList : AppCompatActivity() {
 
     private lateinit var adapter: EmojiAdapter
     private lateinit var recyclerView: RecyclerView
+    private lateinit var binding: ActivityEmojiListBinding // Add this line
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_emoji_list)
+        // Update this line to use View Binding
+        binding = ActivityEmojiListBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         val application = requireNotNull(this).application
         val dataSource = EmojiDatabase.getInstance(application).emojiDatabaseDao
@@ -57,7 +61,7 @@ class EmojiList : AppCompatActivity() {
         })
 
 
-        itemsswipetorefresh.setOnRefreshListener {
+        binding.itemsswipetorefresh.setOnRefreshListener {
 
             emojiViewModel.emojisFromDatabase.observe(this, Observer { emojies ->
                 recyclerView.adapter = adapter
@@ -67,7 +71,7 @@ class EmojiList : AppCompatActivity() {
 
             })
 
-            itemsswipetorefresh.isRefreshing = false
+            binding.itemsswipetorefresh.isRefreshing = false
         }
     }
 

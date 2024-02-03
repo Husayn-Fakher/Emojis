@@ -8,8 +8,8 @@ import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.emojis.R
+import com.example.emojis.databinding.ListRepoBinding
 import com.example.emojis.network.models.Repo
-import kotlinx.android.synthetic.main.list_repo.view.*
 
 /**
  * Created By Fakher_Husayn on 30-Aug-20
@@ -21,12 +21,9 @@ class RepoListAdapter(public val context: Context) :
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-
         val layoutInflater = LayoutInflater.from(parent.context)
-        val view = layoutInflater.inflate(R.layout.list_repo, parent, false)
-        return ReopItemViewHolder(
-            view
-        )
+        val binding = ListRepoBinding.inflate(layoutInflater, parent, false)
+        return ReopItemViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -52,14 +49,24 @@ class RepoListAdapter(public val context: Context) :
 
     }
 
-    class ReopItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    class ReopItemViewHolder(private val binding: ListRepoBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(repo: Repo?, context: Context) {
-            itemView.repoName.text = repo?.full_name
+            // Use the binding object to access views
+            binding.repoName.text = repo?.full_name
         }
 
+        companion object {
+            // Create a ViewHolder using the provided binding
+            fun from(parent: ViewGroup): ReopItemViewHolder {
+                val layoutInflater = LayoutInflater.from(parent.context)
+                val binding = ListRepoBinding.inflate(layoutInflater, parent, false)
+                return ReopItemViewHolder(binding)
+            }
+        }
+    }
     }
 
 
-}
+
 

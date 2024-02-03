@@ -17,21 +17,25 @@ import com.example.emojis.EmojisViewModelFactory
 import com.example.emojis.R
 import com.example.emojis.database.EmojiDatabase
 import com.example.emojis.network.models.Emoji
-import kotlinx.android.synthetic.main.activity_main.*
+import com.example.emojis.databinding.ActivityMainBinding // Update import here
 
 class MainActivity : AppCompatActivity() {
 
     lateinit var avatarName: EditText
-
     var imgUrl: String? = null
-
     lateinit var LoadedEmojies: Array<Emoji>
+    private lateinit var binding: ActivityMainBinding // Add this line
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        progress_bar.visibility = View.VISIBLE
+
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        binding.progressBar.visibility = View.VISIBLE
 
         val sharedPref = this?.getPreferences(Context.MODE_PRIVATE) ?: return
         val networkCalled = sharedPref.getBoolean("firstTime", false)
@@ -46,7 +50,7 @@ class MainActivity : AppCompatActivity() {
         if (!networkCalled) {
             callNetwork(emojiViewModel)
         } else {
-            progress_bar.visibility = View.GONE
+            binding.progressBar.visibility = View.GONE
         }
     }
 
@@ -105,9 +109,9 @@ class MainActivity : AppCompatActivity() {
 
             imgUrl?.let {
                 val imgUri = imgUrl!!.toUri().buildUpon().scheme("https").build()
-                Glide.with(imageView.context)
+                Glide.with(binding.imageView.context)
                     .load(imgUri).apply(RequestOptions())
-                    .into(imageView)
+                    .into(binding.imageView)
             }
 
             emojiViewModel.insertAvatar(avatar)
@@ -125,9 +129,11 @@ class MainActivity : AppCompatActivity() {
             LoadedEmojies = emojies
 
             val sharedPref = this?.getPreferences(Context.MODE_PRIVATE)
-            with(sharedPref.edit()) {
-                putBoolean("firstTime", true)
-                commit()
+            if (sharedPref != null) {
+                with(sharedPref.edit()) {
+                    putBoolean("firstTime", true)
+                    commit()
+                }
             }
 
 
@@ -147,7 +153,7 @@ class MainActivity : AppCompatActivity() {
 
     fun getRandomEmoji() {
 
-        progress_bar.visibility = View.VISIBLE
+        binding.progressBar.visibility = View.VISIBLE
 
         val application = requireNotNull(this).application
 
@@ -168,12 +174,12 @@ class MainActivity : AppCompatActivity() {
 
             imgUrl?.let {
                 val imgUri = imgUrl!!.toUri().buildUpon().scheme("https").build()
-                Glide.with(imageView.context)
+                Glide.with(binding.imageView.context)
                     .load(imgUri).apply(RequestOptions())
-                    .into(imageView)
+                    .into(binding.imageView)
             }
 
-            progress_bar.visibility = View.GONE
+            binding.progressBar.visibility = View.GONE
 
         })
 

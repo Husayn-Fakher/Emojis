@@ -2,19 +2,20 @@ apply plugin: 'com.android.application'
 
 apply plugin: 'kotlin-android'
 
-apply plugin: 'kotlin-android-extensions'
-
 apply plugin: 'kotlin-kapt'
 
 apply plugin: "androidx.navigation.safeargs"
 
 
+
+
+
 android {
-    compileSdkVersion 28
+    compileSdkVersion 34
     defaultConfig {
         applicationId "com.example.emojis"
         minSdkVersion 15
-        targetSdkVersion 28
+        targetSdkVersion 34
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -36,6 +37,13 @@ android {
     dataBinding {
         enabled = true
     }
+    namespace 'com.example.emojis'
+
+
+
+        buildFeatures {
+            viewBinding = true
+        }
 }
 
 dependencies {
