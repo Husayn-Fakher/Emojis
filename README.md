@@ -1,5 +1,4 @@
 # Emojis
-An application demonstrating the use of the latest notions in android
 
 The application is written in Kotlin using the MVVM architecture.
 
